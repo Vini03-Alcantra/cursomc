@@ -12,16 +12,21 @@ import com.viniciusalcantaracursomc.domain.Cidade;
 import com.viniciusalcantaracursomc.domain.Estado;
 import com.viniciusalcantaracursomc.domain.Produto;
 import com.viniciusalcantaracursomc.repositories.CategoriaRepository;
+import com.viniciusalcantaracursomc.repositories.CidadeRepository;
+import com.viniciusalcantaracursomc.repositories.EstadoRepository;
 import com.viniciusalcantaracursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner{
 
 	@Autowired
-	private CategoriaRepository categoriaRepository;
-	
+	private CategoriaRepository categoriaRepository;	
 	@Autowired
-	private ProdutoRepository produtoRepository;
+	private ProdutoRepository produtoRepository;	
+	@Autowired
+	private CidadeRepository cidadeRepository;	
+	@Autowired
+	private EstadoRepository estadoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -55,6 +60,9 @@ public class CursomcApplication implements CommandLineRunner{
 		
 		est1.getCidades().addAll(Arrays.asList(cidade2));
 		est2.getCidades().addAll(Arrays.asList(cidade1, cidade3));
+		
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
 	}
 	
 	
