@@ -1,5 +1,25 @@
 package com.viniciusalcantaracursomc.services;
 
-public class ClienteService {
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+import com.viniciusalcantaracursomc.domain.Cliente;
+import com.viniciusalcantaracursomc.repositories.ClienteRepository;
+import com.viniciusalcantaracursomc.services.exceptions.ObjectNotFoundException;
+
+@Service
+public class ClienteService {
+	@Autowired
+	private ClienteRepository repo;
+	
+	public Cliente find(Integer id) {
+		Optional<Cliente> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado Id:" +id+ "Tipo:" + Cliente.class.getName()
+		));
+		
+	}
 }
