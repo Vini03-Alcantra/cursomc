@@ -79,9 +79,13 @@ public class CursomcApplication implements CommandLineRunner{
 		c1.getTelefones().addAll(Arrays.asList("949949494", "994903322"));
 		
 		Endereco e1 = new Endereco(null, "Rua Canadá", "34", "Apt 301", "Dutra", "94949", c1, cidade3);
-		Endereco e2 = new Endereco(null, "Rua Jamaica", "32", "", "", "4005505", c1, cidade3);
+		Endereco e2 = new Endereco(null, "Rua Jamaica", "32", "", "Machado", "4005505", c1, cidade3);
 		
 		c1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		clienteRepositorie.saveAll(Arrays.asList(c1));
+		
+		enderecoRepositorie.saveAll(Arrays.asList(e1, e2));
 	}
 	
 	
