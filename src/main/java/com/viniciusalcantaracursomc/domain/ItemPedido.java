@@ -2,10 +2,15 @@ package com.viniciusalcantaracursomc.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+
+@Entity
 public class ItemPedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private ItemPedidoPK id;
+	@EmbeddedId
+	private ItemPedidoPK id = new ItemPedidoPK();
 	
 	private Double desconto;
 	private Integer quantidade;

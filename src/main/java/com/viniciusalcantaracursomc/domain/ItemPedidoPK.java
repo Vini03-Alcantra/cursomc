@@ -35,9 +35,6 @@ public class ItemPedidoPK implements Serializable{
 		this.produto = produto;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	@Override
 	public int hashCode() {

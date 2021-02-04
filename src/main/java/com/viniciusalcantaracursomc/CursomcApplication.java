@@ -13,6 +13,7 @@ import com.viniciusalcantaracursomc.domain.Cidade;
 import com.viniciusalcantaracursomc.domain.Cliente;
 import com.viniciusalcantaracursomc.domain.Endereco;
 import com.viniciusalcantaracursomc.domain.Estado;
+import com.viniciusalcantaracursomc.domain.ItemPedido;
 import com.viniciusalcantaracursomc.domain.Pagamento;
 import com.viniciusalcantaracursomc.domain.PagamentoComBoleto;
 import com.viniciusalcantaracursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.viniciusalcantaracursomc.repositories.CidadeRepository;
 import com.viniciusalcantaracursomc.repositories.ClienteRepository;
 import com.viniciusalcantaracursomc.repositories.EnderecoRepositorie;
 import com.viniciusalcantaracursomc.repositories.EstadoRepository;
+import com.viniciusalcantaracursomc.repositories.ItemPedidoRepository;
 import com.viniciusalcantaracursomc.repositories.PagamentoRepository;
 import com.viniciusalcantaracursomc.repositories.PedidoRepository;
 import com.viniciusalcantaracursomc.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class CursomcApplication implements CommandLineRunner{
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -113,6 +117,19 @@ public class CursomcApplication implements CommandLineRunner{
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 200.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 90.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 30.00, 3, 430.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 	
 	
