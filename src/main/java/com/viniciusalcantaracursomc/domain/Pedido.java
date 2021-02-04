@@ -34,6 +34,15 @@ public class Pedido implements Serializable{
 	@JoinColumn(name="endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
 	
+	public Pedido() {}
+	
+	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
+		super();
+		this.id = id;
+		this.instante = instante;		
+		this.cliente = cliente;
+		this.enderecoDeEntrega = enderecoDeEntrega;
+	}
 	public Integer getId() {
 		return id;
 	}

@@ -1,5 +1,6 @@
 package com.viniciusalcantaracursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.viniciusalcantaracursomc.domain.Cidade;
 import com.viniciusalcantaracursomc.domain.Cliente;
 import com.viniciusalcantaracursomc.domain.Endereco;
 import com.viniciusalcantaracursomc.domain.Estado;
+import com.viniciusalcantaracursomc.domain.Pagamento;
+import com.viniciusalcantaracursomc.domain.PagamentoComBoleto;
+import com.viniciusalcantaracursomc.domain.PagamentoComCartao;
+import com.viniciusalcantaracursomc.domain.Pedido;
 import com.viniciusalcantaracursomc.domain.Produto;
+import com.viniciusalcantaracursomc.domain.enums.EstadoPagamento;
 import com.viniciusalcantaracursomc.domain.enums.TipoCliente;
 import com.viniciusalcantaracursomc.repositories.CategoriaRepository;
 import com.viniciusalcantaracursomc.repositories.CidadeRepository;
 import com.viniciusalcantaracursomc.repositories.ClienteRepository;
 import com.viniciusalcantaracursomc.repositories.EnderecoRepositorie;
 import com.viniciusalcantaracursomc.repositories.EstadoRepository;
+import com.viniciusalcantaracursomc.repositories.PagamentoRepository;
+import com.viniciusalcantaracursomc.repositories.PedidoRepository;
 import com.viniciusalcantaracursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -31,13 +39,16 @@ public class CursomcApplication implements CommandLineRunner{
 	@Autowired
 	private CidadeRepository cidadeRepository;	
 	@Autowired
-	private EstadoRepository estadoRepository;
-	
+	private EstadoRepository estadoRepository;	
 	@Autowired
-	private EnderecoRepositorie enderecoRepositorie;
-	
+	private EnderecoRepositorie enderecoRepositorie;	
 	@Autowired
 	private ClienteRepository clienteRepositorie;
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
@@ -86,6 +97,22 @@ public class CursomcApplication implements CommandLineRunner{
 		clienteRepositorie.saveAll(Arrays.asList(c1));
 		
 		enderecoRepositorie.saveAll(Arrays.asList(e1, e2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:01"), c1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("03/02/2019 23:41"), c1, e2);
+		
+		Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pag1);
+		
+		Pagamento pag2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/11/2018 13:40"), null);
+		ped2.setPagamento(pag2);
+		
+		c1.getPedido().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
 	}
 	
 	

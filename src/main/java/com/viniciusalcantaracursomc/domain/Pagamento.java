@@ -14,12 +14,12 @@ import com.viniciusalcantaracursomc.domain.enums.EstadoPagamento;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Pagamento implements Serializable{
+public abstract class Pagamento implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private Integer id;
-	private EstadoPagamento estadoPagamento;
+	private Integer estadoPagamento;
 	
 	@OneToOne
 	@JoinColumn(name="pedido_id")
@@ -31,7 +31,7 @@ public class Pagamento implements Serializable{
 	public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estadoPagamento = estadoPagamento;
+		this.estadoPagamento = estadoPagamento.getCod();
 		this.pedido = pedido;
 	}
 	
@@ -42,10 +42,10 @@ public class Pagamento implements Serializable{
 		this.id = id;
 	}
 	public EstadoPagamento getEstadoPagamento() {
-		return estadoPagamento;
+		return EstadoPagamento.toEnum(estadoPagamento);	
 	}
 	public void setEstadoPagamento(EstadoPagamento estadoPagamento) {
-		this.estadoPagamento = estadoPagamento;
+		this.estadoPagamento = estadoPagamento.getCod();
 	}
 
 	@Override
