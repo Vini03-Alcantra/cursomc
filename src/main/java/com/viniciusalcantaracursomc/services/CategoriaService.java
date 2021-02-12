@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.viniciusalcantaracursomc.domain.Categoria;
 import com.viniciusalcantaracursomc.repositories.CategoriaRepository;
+import com.viniciusalcantaracursomc.services.exceptions.DataIntegrityException;
 import com.viniciusalcantaracursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -38,7 +39,7 @@ public class CategoriaService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não é possível excluir uma categoria que possui produtos");
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
 		}		
 	}
 }
